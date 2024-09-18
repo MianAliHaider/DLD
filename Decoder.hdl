@@ -1,0 +1,15 @@
+CHIP Decoder {
+	IN a,b;
+	OUT d0,d1,d2,d3;
+	
+	PARTS:
+	
+	Not(a=a,out=nota);
+	Not(a=b,out=notb);
+	And(a=nota,b=notb,out=d0);
+	And(a=nota,b=b,out=d1);
+	And(a=a,b=notb,out=d2);
+	And(a=a,b=b,out=d3);
+	
+	}
+	

@@ -1,0 +1,49 @@
+// We make a Chip of ALU.
+
+
+CHIP ALU {
+	IN 
+			x[16],y[16],    // Two Inputs x and y both are 16 Bits
+			zx,             // Control Inputs if (zx==1) set x[16] = 0 else x remains unchange
+			nx,				// Control Inputs if (nx==1) set x = !x else x remains unchange
+			zy,				// Control Inputs if (zy==1) set y[16] = 0 else y remains unchange
+			ny,				// Control Inputs if (ny==1) set y = !y else y remains unchange
+			f,				// Control Inputs if (f==1)  then add (x+y) if (f==0) then and(x&y) and obtained is Out
+			no;				// Control Inputs if (no==1) then Out = !Out if (no==0) then Out = Out 
+	
+	OUT 
+			out[16],        //Output is 16 Bits 
+			ng,				// if (out<0) then ng sets 1
+			zr;				// if (out==0) then zr sets 1
+	
+	PARTS:
+	
+	Mux16(a=x,b=false,sel=zx,out=x1);
+	Mux16(a=y,b=false,sel=zy,out=y1);
+	
+	Not16(a=x1,out=Notx1);
+	Not16(a=y1,out=Noty1);
+	
+	Mux16(a=x1,b=Notx1,sel=nx,out=x2);
+	Mux16(a=y1,b=Noty1,sel=ny,out=y2);
+	
+	And16(a=x2,b=y2,out=x2andy2);
+	Add16(a=x2,b=y2,out=x2addy2);
+	
+	Mux16(a=x2andy2,b=x2addy2,sel=f,out=xFunctiony);
+	
+	Not16(a=xFunctiony,out=NotxFunctiony);
+	Mux16(a=xFunctiony,b=NotxFunctiony,sel=no,out=output);
+	
+	And16(a=output,b=true,out[16]=ng);
+	
+	And16(a=true,b=output,out[0..7]=outLast8);
+	And16(a=true,b=output,out[8..15]=outFirst8);
+	Or8way(a=outLast8,out=Or8wayoutLast8);
+	Or8way(a=outFirst8,out=Or8wayoutFirst8);
+	Or(a=Or8wayoutLast8,b=Or8wayoutFirst8,out=OutputIsNotZero);
+	Not(a=OutputIsNotZero,out=zr);
+	
+	And16(a=true,b=output,out=out);
+	
+	}

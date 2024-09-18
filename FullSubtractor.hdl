@@ -1,0 +1,10 @@
+CHIP FullSubtractor {
+	IN a,b,c;
+	OUT Difference,Borrow;
+	
+	PARTS:
+	
+	HalfSubtractor(a=a,b=b,Difference=Difference1,Borrow=Borrow1);
+	HalfSubtractor(a=Difference1,b=c,Difference=Difference,Borrow=Borrow2);
+	Or(a=Borrow1,b=Borrow2,out=Borrow);
+	}

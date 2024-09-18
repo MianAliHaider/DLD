@@ -1,0 +1,11 @@
+CHIP Encoder {
+	IN d0,d1,d2,d3,d4,d5,d6,d7;
+	OUT a,b,c;
+	
+	PARTS:
+	
+	Or4way(a=d4,b=d5,c=d6,d=d7,out=a);
+	Or4way(a=d2,b=d3,c=d6,d=d7,out=b);
+	Or4way(a=d1,b=d3,c=d5,d=d7,out=c);
+	
+	}
