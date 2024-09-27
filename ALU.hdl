@@ -3,18 +3,18 @@
 
 CHIP ALU {
 	IN 
-			x[16],y[16],    // Two Inputs x and y both are 16 Bits
-			zx,             // Control Inputs if (zx==1) set x[16] = 0 else x remains unchange
-			nx,				// Control Inputs if (nx==1) set x = !x else x remains unchange
-			zy,				// Control Inputs if (zy==1) set y[16] = 0 else y remains unchange
-			ny,				// Control Inputs if (ny==1) set y = !y else y remains unchange
-			f,				// Control Inputs if (f==1)  then add (x+y) if (f==0) then and(x&y) and obtained is Out
-			no;				// Control Inputs if (no==1) then Out = !Out if (no==0) then Out = Out 
+			x[16],y[16],    
+			zx,            
+			nx,
+			zy,
+			ny,
+			f,
+			no;
 	
 	OUT 
-			out[16],        //Output is 16 Bits 
-			ng,				// if (out<0) then ng sets 1
-			zr;				// if (out==0) then zr sets 1
+			out[16],
+			ng,	
+			zr;	
 	
 	PARTS:
 	
